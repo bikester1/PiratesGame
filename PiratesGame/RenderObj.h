@@ -29,6 +29,7 @@ namespace PiratesLife {
 
 	private:
 		std::vector <int> vec;
+		float *indicies;
 		unsigned int vertexBuffer;
 	};
 

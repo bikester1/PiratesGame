@@ -5,5 +5,3 @@ c:\dev\games\piratesgame\piratesgame\renderobj.cpp(39): error C2664: 'void (GLen
               _Ty=int
           ]
   c:\dev\games\piratesgame\piratesgame\renderobj.cpp(39): note: No user-defined-conversion operator available that can perform this conversion, or the operator cannot be called
-  PiratesLife.cpp
-  Generating Code...
