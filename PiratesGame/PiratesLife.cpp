@@ -13,7 +13,7 @@
 int main(void)
 {
 	GLFWwindow* window;
-	//PiratesLife::RenderObj obj = new PiratesLife::RenderObj();
+	PiratesLife::RenderObj obj;
 	int i = 0;
 
 	float verts[6] = {
@@ -23,9 +23,11 @@ int main(void)
 	};
 
 	// give our obj the vertices
-	//for (i = 0; i < sizeof(verts) / sizeof(float); i++)
-	//	obj.putVec(verts[i]);
+	for (i = 0; i < sizeof(verts) / sizeof(float); i++)
+		obj.putVert(verts[i]);
 
+	// update buffer after placing vertices
+	obj.updateVertBuffer();
 
 
 	// Initialize the library
@@ -53,7 +55,7 @@ int main(void)
 		// Render here
 		glClear(GL_COLOR_BUFFER_BIT);
 
-		//obj.render();
+		obj.render();
 
 		// Swap front and back buffers
 		glfwSwapBuffers(window);

@@ -26,17 +26,18 @@ namespace PiratesLife {
 
 	}
 
-	void RenderObj::putVec(int i) {
+	void RenderObj::putVert(float i) {
 
-		RenderObj::vec.push_back(i);
+		verts[vertCount];
+		vertCount++;
 
 	}
 
 	// Place data into the buffer
 	void RenderObj::updateVertBuffer() {
 
-		glBindBuffer(GL_ARRAY_BUFFER, RenderObj::vertexBuffer);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(RenderObj::vec), RenderObj::vec, GL_STATIC_DRAW);
+		glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(verts), verts, GL_STATIC_DRAW);
 
 	}
 
@@ -46,6 +47,8 @@ namespace PiratesLife {
 
 		// generate buffer
 		glGenBuffers(1, &vertexBuffer);
+
+		this::vertCount = 0;
 
 	}
 

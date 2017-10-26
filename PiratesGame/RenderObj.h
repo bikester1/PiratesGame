@@ -19,7 +19,7 @@ namespace PiratesLife {
 		std::vector <int> getVec();
 
 		// setters
-		void putVec(int i);
+		void putVert(float i);
 
 		// Constructor
 		RenderObj();
@@ -29,7 +29,8 @@ namespace PiratesLife {
 
 	private:
 		std::vector <int> vec;
-		float *indicies;
+		float verts[6];
+		int vertCount;
 		unsigned int vertexBuffer;
 	};
 

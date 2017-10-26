@@ -1,7 +1,2 @@
 ﻿  RenderObj.cpp
-c:\dev\games\piratesgame\piratesgame\renderobj.cpp(39): error C2664: 'void (GLenum,GLsizeiptr,const void *,GLenum)': cannot convert argument 3 from 'std::vector<int,std::allocator<_Ty>>' to 'const void *'
-          with
-          [
-              _Ty=int
-          ]
-  c:\dev\games\piratesgame\piratesgame\renderobj.cpp(39): note: No user-defined-conversion operator available that can perform this conversion, or the operator cannot be called
+  PiratesGame.vcxproj -> C:\Dev\Games\PiratesGame\x64\Debug\PiratesGame.exe
