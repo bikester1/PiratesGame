@@ -25,9 +25,14 @@
   <ItemGroup>
     <Text Include="Dependencies\glew-2.1.0\LICENSE.txt" />
     <Text Include="Dependencies\GLFW\COPYING.txt" />
+    <Text Include="Shaders\FragmentShader.txt" />
+    <Text Include="Shaders\VertexShader.txt" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="RenderObj.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PiratesLife.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

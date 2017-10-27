@@ -8,14 +8,19 @@
 #include <GLFW/glfw3.h>
 
 #include <iostream>
+#include <fstream>
+#include <String>
 #include "RenderObj.h"
+#include "PiratesLife.h"
+
 
 int main(void)
 {
-	GLFWwindow* window;
+	GLFWwindow *window = NULL;
 	PiratesLife::RenderObj obj;
 	int i = 0;
 
+	// define some verticies to draw 
 	float verts[6] = {
 		-0.5f, -0.5f,
 		0.0f, 0.5f,
@@ -26,28 +31,17 @@ int main(void)
 	for (i = 0; i < sizeof(verts) / sizeof(float); i++)
 		obj.putVert(verts[i]);
 
-	// Initialize the library
-	if (!glfwInit())
-		return -1;
-
-	// Create a windowed mode window and its OpenGL context
-	window = glfwCreateWindow(640, 480, "Hello World", NULL, NULL);
-	if (!window)
-	{
-		glfwTerminate();
+	// init graphics libraries
+	if (!initGL(&window, 1028, 512, "Pirates Life For Me!!")) {
 		return -1;
 	}
 
-	// Make the window's context current
-	glfwMakeContextCurrent(window);
+	//if (!loadShaders("C:\\Dev\\Games\\PiratesGame\\PiratesGame\\Shaders\\VertexShader.txt", "C:\\Dev\\Games\\PiratesGame\\PiratesGame\\Shaders\\FragmentShader.txt")) {
+	//	return -1;
+	//}
 
-	if (glewInit() != GLEW_OK) {
-		std::cout << "Test?" << std::endl;
-	}
-
+	// init and update buffers
 	obj.initBuffers();
-
-	// update buffer after placing vertices
 	obj.updateVertBuffer();
 
 	// Loop until the user closes the window
@@ -67,5 +61,90 @@ int main(void)
 
 	glfwTerminate();
 	return 0;
+}
+
+// init the graphics library
+// return 1 on success
+// return -1 on failure 
+int initGL(GLFWwindow **window, int width, int height, char *str) {
+	// Initialize glfw
+	if (!glfwInit())
+		return -1;
+
+	// Create a windowed mode window and its OpenGL context
+	*window = glfwCreateWindow(width, height, str, NULL, NULL);
+	if (!*window)
+	{
+		glfwTerminate();
+		return -1;
+	}
+
+	// Make the window's context current
+	glfwMakeContextCurrent(*window);
+
+	// Finally init GLEW 
+	if (glewInit() != GLEW_OK) {
+		return -1;
+	}
+
+
+	return 1;
+}
+
+int loadShaders(char *vertexShaderPath, char *fragmentShaderPath) {
+	int vertexShader = glCreateShader(GL_VERTEX_SHADER);
+	int fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
+
+	// init stream and string
+	std::string vertexShaderCode;
+	std::ifstream vertexShaderStream(vertexShaderPath, std::ios::in);
+
+	// open vertexShaderCode
+	if (vertexShaderStream.is_open()) {
+		std::string line = "";
+		while (getline(vertexShaderStream, line))
+			vertexShaderCode += line + "\n";
+		vertexShaderStream.close();
+	}
+	else {
+		return -1;
+	}
+
+	// init stream and string
+	std::string fragmentShaderCode;
+	std::ifstream fragmentShaderStream(vertexShaderPath, std::ios::in);
+
+	// open fragmentShaderCode
+	if (fragmentShaderStream.is_open()) {
+		std::string line = "";
+		while (getline(fragmentShaderStream, line))
+			fragmentShaderCode += line + "\n";
+		fragmentShaderStream.close();
+	}
+	else {
+		return -1;
+	}
+
+	// compile shaders
+	char const *vertexSourcePtr = vertexShaderCode.c_str();
+	glShaderSource(vertexShader, 1, &vertexSourcePtr, NULL);
+	glCompileShader(vertexShader);
+	char const *fragmentSourcePtr = fragmentShaderCode.c_str();
+	glShaderSource(fragmentShader, 1, &fragmentSourcePtr, NULL);
+	glCompileShader(fragmentShader);
+
+	// attatch and link shaders
+	int program = glCreateProgram();
+	glAttachShader(program, vertexShader);
+	glAttachShader(program, fragmentShader);
+	glLinkProgram(program);
+
+	// clean up clean up everybody do your share
+	glDetachShader(program, vertexShader);
+	glDetachShader(program, fragmentShader);
+	glDeleteShader(vertexShader);
+	glDeleteShader(fragmentShader);
+
+	return program;
 }
 
