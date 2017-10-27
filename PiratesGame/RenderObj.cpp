@@ -29,12 +29,41 @@ namespace PiratesLife {
 
 	// getters
 	
-	// setters
-	void RenderObj::putVert(float i) {
+	//---------//
+	// setters //
+	//---------//
 
-		verts[vertCount];
+	// Attempts to add to the verts array
+	// Returns 0 on success
+	// returns -1 on failure
+	int RenderObj::putVert(float n) {
+		int i = 0;
+		float *tempArr = NULL;
+
+		// Check if verts needs to be expanded
+		if (vertCount > (maxVerts * 3) / 4) {
+
+			maxVerts *= 2;
+			tempArr = new float[maxVerts];
+
+			if (tempArr == NULL)
+				return -1;
+
+			for (i = 0; i < vertCount; i++) {
+
+				tempArr[i] = verts[i];
+
+			}
+
+			delete verts;
+			verts = tempArr;
+
+		}
+
+		verts[vertCount] = n;
 		vertCount++;
 
+		return 0;
 	}
 	
 	// Place data into the buffer
@@ -50,6 +79,8 @@ namespace PiratesLife {
 	RenderObj::RenderObj() {
 
 		vertCount = 0;
+		maxVerts = 10;
+		verts = new float [maxVerts];
 
 	}
 

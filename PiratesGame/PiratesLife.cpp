@@ -9,7 +9,6 @@
 
 #include <iostream>
 #include "RenderObj.h"
-#include "TestObj.h"
 
 int main(void)
 {

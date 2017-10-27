@@ -22,7 +22,7 @@ namespace PiratesLife {
 			// getters
 			
 			// setters
-			void putVert(float i);
+			int putVert(float i);
 
 			// Constructor
 			RenderObj();
@@ -31,7 +31,8 @@ namespace PiratesLife {
 			~RenderObj();
 
 		private:
-			float verts[6];
+			float *verts;
+			int maxVerts;
 			int vertCount;
 			unsigned int vertexBuffer;
 
