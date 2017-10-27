@@ -23,14 +23,14 @@ int main(void)
 
 	// define some verticies to draw 
 	float verts[9] = {
-		0.0f, 0.0f, 0.0f,
-		1.0f, 0.0f, 0.0f,
-		2.0f, 0.0f, 0.0f
+		-1.0f, 0.0f, 1.0f,
+		1.0f, 0.0f, 1.0f,
+		1.0f, 1.0f, 1.0f
 	};
 
 	// give our obj the vertices
-	for (i = 0; i < sizeof(verts) / sizeof(float); i++) {
-		obj.putVert(verts[i++], verts[i++], verts[i++]);
+	for (i = 0; i + 2 < sizeof(verts) / sizeof(float); i+=3) {
+		obj.putVert(verts[i], verts[i + 1], verts[i + 2]);
 	}
 		
 
@@ -58,6 +58,14 @@ int main(void)
 
 		obj.render();
 
+		//glBegin(GL_LINES);
+		//glVertex3f(-1.0f, 0.0f, 1.0f);
+		//glVertex3f(1.0f, 0.0f, 1.0f);
+		//glVertex3f(1.0f, 0.0f, 1.0f);
+		//glVertex3f(1.0f, 1.0f, 1.0f);
+		//glVertex3f(1.0f, 1.0f, 1.0f);
+		//glVertex3f(-1.0f, 0.0f, 1.0f);
+		//glEnd();
 		// Swap front and back buffers
 		glfwSwapBuffers(window);
 
