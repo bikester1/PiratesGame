@@ -38,7 +38,7 @@ namespace PiratesLife {
 	// Attempts to add to the verts array
 	// Returns 0 on success
 	// returns -1 on failure
-	int RenderObj::putVert(float n) {
+	int RenderObj::putVert(float x, float y, float z) {
 		int i = 0;
 		float *tempArr = NULL;
 
@@ -62,7 +62,13 @@ namespace PiratesLife {
 
 		}
 
-		verts[vertCount] = n;
+		verts[vertCount] = x;
+		vertCount++;
+
+		verts[vertCount] = y;
+		vertCount++;
+
+		verts[vertCount] = z;
 		vertCount++;
 
 		return 0;
@@ -83,7 +89,7 @@ namespace PiratesLife {
 	RenderObj::RenderObj() {
 
 		vertCount = 0;
-		maxVerts = 10;
+		maxVerts = 20;
 		vertSize = 3;
 		stride = sizeof(float) * vertSize;
 		verts = new float[maxVerts];
@@ -93,7 +99,7 @@ namespace PiratesLife {
 	RenderObj::RenderObj(int vertSize) {
 
 		vertCount = 0;
-		maxVerts = 10;
+		maxVerts = 20;
 		RenderObj::vertSize = vertSize;
 		stride = sizeof(float) * vertSize;
 		verts = new float[maxVerts];

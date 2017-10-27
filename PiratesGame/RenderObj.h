@@ -22,7 +22,7 @@ namespace PiratesLife {
 			// getters
 			
 			// setters
-			int putVert(float i);
+			int putVert(float x, float y, float z);
 
 			// Constructor
 			RenderObj();

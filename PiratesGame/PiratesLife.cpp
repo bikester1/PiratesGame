@@ -22,29 +22,17 @@ int main(void)
 	int i = 0;
 
 	// define some verticies to draw 
-	float verts[36] = {
-		2.0f, 1.0f, 1.0f,
-		2.0f, 0.0f, 1.0f,
-		2.0f, 0.0f, 0.0f,
-
-		2.0f, 1.0f, 1.0f,
-		2.0f, 0.0f, 1.0f,
-		2.0f, 0.0f, 0.0f,
-
-
-		1.0f, 1.0f, -1.0f,
-		0.0f, 1.0f, -1.0f,
-		0.0f, 1.0f, -1.0f,
-
-
-		1.0f, 1.0f, -1.0f,
-		0.0f, 1.0f, -1.0f,
-		0.0f, 1.0f, -1.0f
+	float verts[9] = {
+		-0.5f, -0.5f, 2.0f,
+		0.0f, 0.5f, 2.0f,
+		0.5f, -0.5f, 2.0f
 	};
 
 	// give our obj the vertices
-	for (i = 0; i < sizeof(verts) / sizeof(float); i++)
-		obj.putVert(verts[i]);
+	for (i = 0; i < sizeof(verts) / sizeof(float) / 3; i++) {
+		obj.putVert(verts[i++], verts[i++], verts[i++]);
+	}
+		
 
 	// init graphics libraries
 	if (!initGL(&window, 1028, 512, "Pirates Life For Me!!")) {
