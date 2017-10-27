@@ -127,10 +127,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Importer.cpp" />
     <ClCompile Include="PiratesLife.cpp" />
     <ClCompile Include="RenderObj.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Importer.h" />
     <ClInclude Include="PiratesLife.h" />
     <ClInclude Include="RenderObj.h" />
   </ItemGroup>
