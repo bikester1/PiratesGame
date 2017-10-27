@@ -18,13 +18,14 @@ int main(void)
 {
 	GLFWwindow *window = NULL;
 	PiratesLife::RenderObj obj;
+	unsigned int program;
 	int i = 0;
 
 	// define some verticies to draw 
-	float verts[6] = {
-		-0.5f, -0.5f,
-		0.0f, 0.5f,
-		0.5f, -0.5f,
+	float verts[9] = {
+		-0.5f, -0.5f, 2.0f,
+		0.0f, 0.5f, 2.0f,
+		0.5f, -0.5f, 2.0f
 	};
 
 	// give our obj the vertices
@@ -36,9 +37,9 @@ int main(void)
 		return -1;
 	}
 
-	//if (!loadShaders("C:\\Dev\\Games\\PiratesGame\\PiratesGame\\Shaders\\VertexShader.txt", "C:\\Dev\\Games\\PiratesGame\\PiratesGame\\Shaders\\FragmentShader.txt")) {
-	//	return -1;
-	//}
+	if (!(program = loadShaders("C:\\Dev\\Games\\PiratesGame\\PiratesGame\\Shaders\\VertexShader.txt", "C:\\Dev\\Games\\PiratesGame\\PiratesGame\\Shaders\\FragmentShader.txt"))) {
+		return -1;
+	}
 
 	// init and update buffers
 	obj.initBuffers();
@@ -48,7 +49,8 @@ int main(void)
 	while (!glfwWindowShouldClose(window))
 	{
 		// Render here
-		glClear(GL_COLOR_BUFFER_BIT);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		glUseProgram(program);
 
 		obj.render();
 
@@ -112,7 +114,7 @@ int loadShaders(char *vertexShaderPath, char *fragmentShaderPath) {
 
 	// init stream and string
 	std::string fragmentShaderCode;
-	std::ifstream fragmentShaderStream(vertexShaderPath, std::ios::in);
+	std::ifstream fragmentShaderStream(fragmentShaderPath, std::ios::in);
 
 	// open fragmentShaderCode
 	if (fragmentShaderStream.is_open()) {
@@ -125,6 +127,9 @@ int loadShaders(char *vertexShaderPath, char *fragmentShaderPath) {
 		return -1;
 	}
 
+	GLint Result = GL_FALSE;
+	int InfoLogLength;
+
 	// compile shaders
 	char const *vertexSourcePtr = vertexShaderCode.c_str();
 	glShaderSource(vertexShader, 1, &vertexSourcePtr, NULL);
@@ -132,6 +137,14 @@ int loadShaders(char *vertexShaderPath, char *fragmentShaderPath) {
 	char const *fragmentSourcePtr = fragmentShaderCode.c_str();
 	glShaderSource(fragmentShader, 1, &fragmentSourcePtr, NULL);
 	glCompileShader(fragmentShader);
+
+	glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, &Result);
+	glGetShaderiv(fragmentShader, GL_INFO_LOG_LENGTH, &InfoLogLength);
+	if (InfoLogLength > 0) {
+		std::vector<char> VertexShaderErrorMessage(InfoLogLength + 1);
+		glGetShaderInfoLog(fragmentShader, InfoLogLength, NULL, &VertexShaderErrorMessage[0]);
+		printf("%s\n", &VertexShaderErrorMessage[0]);
+	}
 
 	// attatch and link shaders
 	int program = glCreateProgram();
