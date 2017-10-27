@@ -26,16 +26,18 @@ namespace PiratesLife {
 
 			// Constructor
 			RenderObj();
+			RenderObj(int vertSize);
 
 			// Deconstructor
 			~RenderObj();
 
 		private:
-			float *verts;
+			float* verts;
 			int maxVerts;
 			int vertCount;
 			unsigned int vertexBuffer;
-
+			int vertSize;
+			int stride;
 	};
 
 } // namespace PiratesLife

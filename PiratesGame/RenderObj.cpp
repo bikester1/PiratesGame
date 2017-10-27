@@ -16,7 +16,7 @@ namespace PiratesLife {
 	void RenderObj::render() {
 
 		glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
-		glDrawArrays(GL_TRIANGLES, 0, 3);
+		glDrawArrays(GL_TRIANGLES, 0, vertCount);
 
 	}
 
@@ -55,7 +55,7 @@ namespace PiratesLife {
 
 			}
 
-			delete verts;
+			delete[] verts;
 			verts = tempArr;
 
 		}
@@ -71,6 +71,8 @@ namespace PiratesLife {
 
 		glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
 		glBufferData(GL_ARRAY_BUFFER, sizeof(verts), verts, GL_STATIC_DRAW);
+		glVertexAttribPointer(0, vertSize, GL_FLOAT, GL_FALSE, stride, 0);
+		glEnableVertexAttribArray(0);
 
 	}
 
@@ -80,7 +82,19 @@ namespace PiratesLife {
 
 		vertCount = 0;
 		maxVerts = 10;
-		verts = new float [maxVerts];
+		vertSize = 2;
+		stride = sizeof(float) * vertSize;
+		verts = new float[maxVerts];
+
+	}
+
+	RenderObj::RenderObj(int vertSize) {
+
+		vertCount = 0;
+		maxVerts = 10;
+		RenderObj::vertSize = vertSize;
+		stride = sizeof(float) * vertSize;
+		verts = new float[maxVerts];
 
 	}
 
