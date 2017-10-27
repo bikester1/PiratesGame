@@ -22,10 +22,24 @@ int main(void)
 	int i = 0;
 
 	// define some verticies to draw 
-	float verts[9] = {
-		-0.5f, -0.5f, 2.0f,
-		0.0f, 0.5f, 2.0f,
-		0.5f, -0.5f, 2.0f
+	float verts[36] = {
+		2.0f, 1.0f, 1.0f,
+		2.0f, 0.0f, 1.0f,
+		2.0f, 0.0f, 0.0f,
+
+		2.0f, 1.0f, 1.0f,
+		2.0f, 0.0f, 1.0f,
+		2.0f, 0.0f, 0.0f,
+
+
+		1.0f, 1.0f, -1.0f,
+		0.0f, 1.0f, -1.0f,
+		0.0f, 1.0f, -1.0f,
+
+
+		1.0f, 1.0f, -1.0f,
+		0.0f, 1.0f, -1.0f,
+		0.0f, 1.0f, -1.0f
 	};
 
 	// give our obj the vertices
@@ -34,10 +48,12 @@ int main(void)
 
 	// init graphics libraries
 	if (!initGL(&window, 1028, 512, "Pirates Life For Me!!")) {
+		printf("Exiting Program: initGL error\n");
 		return -1;
 	}
 
 	if (!(program = loadShaders("C:\\Dev\\Games\\PiratesGame\\PiratesGame\\Shaders\\VertexShader.txt", "C:\\Dev\\Games\\PiratesGame\\PiratesGame\\Shaders\\FragmentShader.txt"))) {
+		printf("Exiting Program: shader error\n");
 		return -1;
 	}
 
@@ -70,13 +86,17 @@ int main(void)
 // return -1 on failure 
 int initGL(GLFWwindow **window, int width, int height, char *str) {
 	// Initialize glfw
-	if (!glfwInit())
+	if (!glfwInit()) {
+		printf("Error: glfw failed to initialize.\n");
 		return -1;
+	}
+		
 
 	// Create a windowed mode window and its OpenGL context
 	*window = glfwCreateWindow(width, height, str, NULL, NULL);
 	if (!*window)
 	{
+		printf("Error: glfw failed to create window properly.\n");
 		glfwTerminate();
 		return -1;
 	}
@@ -86,6 +106,7 @@ int initGL(GLFWwindow **window, int width, int height, char *str) {
 
 	// Finally init GLEW 
 	if (glewInit() != GLEW_OK) {
+		printf("Error: GLEW failed to initialize properly.\n");
 		return -1;
 	}
 

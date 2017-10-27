@@ -72,7 +72,7 @@ namespace PiratesLife {
 	void RenderObj::updateVertBuffer() {
 
 		glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 6, verts, GL_STATIC_DRAW);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(float) * vertCount, verts, GL_STATIC_DRAW);
 		glVertexAttribPointer(0, vertSize, GL_FLOAT, GL_FALSE, stride, 0);
 		glEnableVertexAttribArray(0);
 

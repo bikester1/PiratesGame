@@ -36,7 +36,11 @@ namespace PiratesLife {
 			int maxVerts;
 			int vertCount;
 			unsigned int vertexBuffer;
+
+			// how many floats are in one vertex
 			int vertSize;
+
+			// how far apart are each vertex
 			int stride;
 	};
 
