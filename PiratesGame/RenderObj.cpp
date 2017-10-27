@@ -15,10 +15,10 @@ namespace PiratesLife {
 	// render the object
 	void RenderObj::render() {
 
-		glEnableVertexAttribArray(0);
 		glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
+		glEnableVertexAttribArray(0);
 		glVertexAttribPointer(0, vertSize, GL_FLOAT, GL_FALSE, stride, 0);
-		glDrawArrays(GL_TRIANGLES, 0, vertCount);
+		glDrawArrays(GL_TRIANGLES, 0, vertCount / vertSize);
 
 	}
 
