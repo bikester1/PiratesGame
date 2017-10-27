@@ -42,4 +42,10 @@
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Models\untitled.mtl" />
+  </ItemGroup>
+  <ItemGroup>
+    <Object Include="Models\untitled.obj" />
+  </ItemGroup>
 </Project>
