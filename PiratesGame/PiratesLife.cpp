@@ -9,6 +9,7 @@
 
 #include <iostream>
 #include "RenderObj.h"
+#include "TestObj.h"
 
 int main(void)
 {
@@ -25,10 +26,6 @@ int main(void)
 	// give our obj the vertices
 	for (i = 0; i < sizeof(verts) / sizeof(float); i++)
 		obj.putVert(verts[i]);
-
-	// update buffer after placing vertices
-	obj.updateVertBuffer();
-
 
 	// Initialize the library
 	if (!glfwInit())
@@ -48,6 +45,11 @@ int main(void)
 	if (glewInit() != GLEW_OK) {
 		std::cout << "Test?" << std::endl;
 	}
+
+	obj.initBuffers();
+
+	// update buffer after placing vertices
+	obj.updateVertBuffer();
 
 	// Loop until the user closes the window
 	while (!glfwWindowShouldClose(window))

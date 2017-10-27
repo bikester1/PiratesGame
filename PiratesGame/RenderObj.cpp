@@ -11,7 +11,8 @@
 #include <Vector>
 
 namespace PiratesLife {
-
+	
+	// render the object
 	void RenderObj::render() {
 
 		glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
@@ -19,20 +20,23 @@ namespace PiratesLife {
 
 	}
 
-	// getters
-	std::vector <int> RenderObj::getVec() {
+	void RenderObj::initBuffers() {
 
-		return vec;
+		// generates buffer 
+		glGenBuffers(1, &vertexBuffer);
 
 	}
 
+	// getters
+	
+	// setters
 	void RenderObj::putVert(float i) {
 
 		verts[vertCount];
 		vertCount++;
 
 	}
-
+	
 	// Place data into the buffer
 	void RenderObj::updateVertBuffer() {
 
@@ -41,14 +45,11 @@ namespace PiratesLife {
 
 	}
 
-
+	
 	// Constructor
 	RenderObj::RenderObj() {
 
-		// generate buffer
-		glGenBuffers(1, &vertexBuffer);
-
-		this::vertCount = 0;
+		vertCount = 0;
 
 	}
 

@@ -8,32 +8,34 @@
 namespace PiratesLife {
 
 	class RenderObj {
-	public:
 
-		void render();
+		public:
+			
+			void render();
 
-		// Transfer saved vertices to VBO
-		void updateVertBuffer();
+			// Transfer saved vertices to VBO
+			void updateVertBuffer();
 
-		// getters
-		std::vector <int> getVec();
+			// init opengl
+			void initBuffers();
 
-		// setters
-		void putVert(float i);
+			// getters
+			
+			// setters
+			void putVert(float i);
 
-		// Constructor
-		RenderObj();
+			// Constructor
+			RenderObj();
 
-		// Deconstructor
-		virtual ~RenderObj();
+			// Deconstructor
+			~RenderObj();
 
-	private:
-		std::vector <int> vec;
-		float verts[6];
-		int vertCount;
-		unsigned int vertexBuffer;
+		private:
+			float verts[6];
+			int vertCount;
+			unsigned int vertexBuffer;
+
 	};
-
 
 } // namespace PiratesLife
 
