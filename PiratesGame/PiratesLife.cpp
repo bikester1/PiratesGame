@@ -23,13 +23,13 @@ int main(void)
 
 	// define some verticies to draw 
 	float verts[9] = {
-		-0.5f, -0.5f, 2.0f,
-		0.0f, 0.5f, 2.0f,
-		0.5f, -0.5f, 2.0f
+		0.0f, 0.0f, 0.0f,
+		1.0f, 0.0f, 0.0f,
+		2.0f, 0.0f, 0.0f
 	};
 
 	// give our obj the vertices
-	for (i = 0; i < sizeof(verts) / sizeof(float) / 3; i++) {
+	for (i = 0; i < sizeof(verts) / sizeof(float); i++) {
 		obj.putVert(verts[i++], verts[i++], verts[i++]);
 	}
 		
