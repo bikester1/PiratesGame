@@ -16,7 +16,7 @@ float **Importer::ImportVerticesFromOBJ(std::string filePath) {
 	}
 
 
-
+	return NULL;
 }
 
 Importer::Importer()

@@ -5,7 +5,8 @@
 
 #include <Vector>
 #include "managedArray.h"
-#include <glm\vec3.hpp>
+#include "Camera.h"
+#include <glm/vec3.hpp>
 
 namespace PiratesLife {
 
@@ -22,25 +23,43 @@ namespace PiratesLife {
 			void initBuffers();
 
 			// getters
-			
+			float getPosX(float x);
+
+			float getPosY(float y);
+
+			float getPosZ(float z);
+
+			glm::vec3 getPos(float x, float y, float z);
+
+			glm::mat4x4 getMVP();
+
+
 			// setters
 			int putVert(float x, float y, float z);
+
+			void setPosX(float x);
+
+			void setPosY(float y);
+
+			void setPosZ(float z);
+
+			void setPos(float x, float y, float z);
 
 			// Constructor
 			RenderObj();
 			RenderObj(int vertSize);
+			RenderObj(PiratesLife::Camera *cam);
 
 			// Deconstructor
 			~RenderObj();
 
 		private:
-			//float* verts;
-			//int maxVerts;
-			//int vertCount;
-
-			//vec3Array<float> vertices;
 			managedArray<glm::vec3> myVertices;
 			unsigned int vertexBuffer;
+			glm::vec3 pos;
+			glm::vec3 rot;
+			glm::vec3 scale;
+			PiratesLife::Camera *cam;
 
 			// how many floats are in one vertex
 			int vertSize;

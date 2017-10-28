@@ -17,7 +17,11 @@
 int main(void)
 {
 	GLFWwindow *window = NULL;
-	PiratesLife::RenderObj obj;
+	float width = 1024;
+	float height = 512;
+	PiratesLife::Camera cam(45.0f, width / height, 0.1f, 1000.0f);
+	cam.setPos(glm::vec3(0.0f, 0.0f, 0.0f));
+	PiratesLife::RenderObj obj = PiratesLife::RenderObj(&cam);
 	unsigned int program;
 	int i = 0;
 
@@ -43,7 +47,7 @@ int main(void)
 		
 
 	// init graphics libraries
-	if (!initGL(&window, 1028, 512, "Pirates Life For Me!!")) {
+	if (!initGL(&window, width, height, "Pirates Life For Me!!")) {
 		printf("Exiting Program: initGL error\n");
 		return -1;
 	}
@@ -57,15 +61,23 @@ int main(void)
 	obj.initBuffers();
 	obj.updateVertBuffer();
 
+	// init MVP
+	unsigned int matrixId = glGetUniformLocation(program, "MVP");
+
+	glm::vec3 rot;
 	// Loop until the user closes the window
 	while (!glfwWindowShouldClose(window))
 	{
 		// Render here
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		glUseProgram(program);
+		glUniformMatrix4fv(matrixId, 1, GL_FALSE, &(obj.getMVP()[0][0]));
 
 		obj.render();
 
+		rot = cam.getRot();
+		std::cout << rot.y << std::endl;
+		cam.setRot(glm::vec3(rot.x, rot.y + 1, rot.z));
 		//glBegin(GL_LINES);
 		//glVertex3f(-1.0f, 0.0f, 1.0f);
 		//glVertex3f(1.0f, 0.0f, 1.0f);
