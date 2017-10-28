@@ -9,6 +9,7 @@
 
 #include <GL/glew.h>
 #include <Vector>
+#include "vec3Array.h"
 
 namespace PiratesLife {
 	
@@ -18,7 +19,7 @@ namespace PiratesLife {
 		glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
 		glEnableVertexAttribArray(0);
 		glVertexAttribPointer(0, vertSize, GL_FLOAT, GL_TRUE, stride, 0);
-		glDrawArrays(GL_LINE_LOOP, 0, vertCount / vertSize);
+		glDrawArrays(GL_LINE_LOOP, 0, vertices.getSize() / vertSize);
 
 		glDisableVertexAttribArray(0);
 	}
@@ -40,47 +41,18 @@ namespace PiratesLife {
 	// Returns 0 on success
 	// returns -1 on failure
 	int RenderObj::putVert(float x, float y, float z) {
-		int i = 0;
-		float *tempArr = NULL;
+		
+		if (vertices.putVec(x, y, z) == NULL)
+			return 0;
 
-		// Check if verts needs to be expanded
-		if (vertCount > (maxVerts * 3) / 4) {
-
-			maxVerts *= 2;
-			tempArr = new float[maxVerts];
-
-			if (tempArr == NULL)
-				return -1;
-
-			for (i = 0; i < vertCount; i++) {
-
-				tempArr[i] = verts[i];
-
-			}
-
-			delete[] verts;
-			verts = tempArr;
-
-		}
-
-		verts[vertCount] = x;
-		vertCount++;
-
-		verts[vertCount] = y;
-		vertCount++;
-
-		verts[vertCount] = z;
-		vertCount++;
-
-		return 0;
+		return 1;
 	}
 	
 	// Place data into the buffer
 	void RenderObj::updateVertBuffer() {
-		float temp[9];
 
 		glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(float) * vertCount, verts, GL_STATIC_DRAW);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(float) * vertices.getSize(), vertices.ptr(), GL_STATIC_DRAW);
 		glVertexAttribPointer(0, vertSize, GL_FLOAT, GL_TRUE, stride, 0);
 		glEnableVertexAttribArray(0);
 		//glGetBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(float) * vertCount, temp);
@@ -91,21 +63,15 @@ namespace PiratesLife {
 	// Constructor
 	RenderObj::RenderObj() {
 
-		vertCount = 0;
-		maxVerts = 20;
 		vertSize = 3;
 		stride = sizeof(float) * vertSize;
-		verts = new float[maxVerts];
 
 	}
 
 	RenderObj::RenderObj(int vertSize) {
 
-		vertCount = 0;
-		maxVerts = 20;
 		RenderObj::vertSize = vertSize;
 		stride = sizeof(float) * vertSize;
-		verts = new float[maxVerts];
 
 	}
 
