@@ -24,6 +24,9 @@
     <ClCompile Include="Importer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="vec3Array.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="Dependencies\glew-2.1.0\LICENSE.txt" />
@@ -41,13 +44,14 @@
     <ClInclude Include="Importer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="vec3Array.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Models\untitled.mtl" />
     <None Include="Models\untitled.obj" />
     <None Include="Models\Boat.mtl" />
-  </ItemGroup>
-  <ItemGroup>
-    <Object Include="Models\Boat.obj" />
+    <None Include="Models\Boat.obj" />
   </ItemGroup>
 </Project>
