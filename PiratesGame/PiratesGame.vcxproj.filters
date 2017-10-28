@@ -24,7 +24,7 @@
     <ClCompile Include="Importer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="vec3Array.cpp">
+    <ClCompile Include="managedArray.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -44,7 +44,7 @@
     <ClInclude Include="Importer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="vec3Array.h">
+    <ClInclude Include="managedArray.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -8,8 +8,9 @@
 #include "RenderObj.h"
 
 #include <GL/glew.h>
-#include <Vector>
-#include "vec3Array.h"
+#include <glm/vec3.hpp>
+
+#include "managedArray.cpp"
 
 namespace PiratesLife {
 	
@@ -19,7 +20,7 @@ namespace PiratesLife {
 		glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
 		glEnableVertexAttribArray(0);
 		glVertexAttribPointer(0, vertSize, GL_FLOAT, GL_TRUE, stride, 0);
-		glDrawArrays(GL_LINE_LOOP, 0, vertices.getSize() / vertSize);
+		glDrawArrays(GL_LINE_LOOP, 0, myVertices.getSize());
 
 		glDisableVertexAttribArray(0);
 	}
@@ -31,31 +32,37 @@ namespace PiratesLife {
 
 	}
 
-	// getters
-	
-	//---------//
-	// setters //
-	//---------//
-
 	// Attempts to add to the verts array
-	// Returns 0 on success
-	// returns -1 on failure
+	// Returns 1 on success
+	// returns 0 on failure
 	int RenderObj::putVert(float x, float y, float z) {
-		
-		if (vertices.putVec(x, y, z) == NULL)
-			return 0;
 
+		myVertices.putVec(glm::vec3(x, y, z));
 		return 1;
+
 	}
 	
 	// Place data into the buffer
 	void RenderObj::updateVertBuffer() {
 
+		float *vertices = new float[(myVertices.getSize() * 3)];
+		glm::vec3 tempVec3;
+		int i;
+
+		for (i = 0; i < myVertices.getSize(); i++) {
+			tempVec3 = myVertices.getVec(i);
+			vertices[(i * 3) + 0] = tempVec3.x;
+			vertices[(i * 3) + 1] = tempVec3.y;
+			vertices[(i * 3) + 2] = tempVec3.z;
+		}
+
 		glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(float) * vertices.getSize(), vertices.ptr(), GL_STATIC_DRAW);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(float) * myVertices.getSize() * vertSize, vertices, GL_STATIC_DRAW);
 		glVertexAttribPointer(0, vertSize, GL_FLOAT, GL_TRUE, stride, 0);
 		glEnableVertexAttribArray(0);
 		//glGetBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(float) * vertCount, temp);
+
+		delete vertices;
 
 	}
 
@@ -68,6 +75,7 @@ namespace PiratesLife {
 
 	}
 
+	// destructor
 	RenderObj::RenderObj(int vertSize) {
 
 		RenderObj::vertSize = vertSize;

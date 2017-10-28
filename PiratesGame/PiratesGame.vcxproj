@@ -89,7 +89,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(ProjectDir)Dependencies\GLFW\include;$(ProjectDir)Dependencies\glew-2.1.0\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)Dependencies\glm 0.9.8.5;$(ProjectDir)Dependencies\GLFW\include;$(ProjectDir)Dependencies\glew-2.1.0\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <UndefinePreprocessorDefinitions>
       </UndefinePreprocessorDefinitions>
       <PreprocessorDefinitions>GLEW_STATIC;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -130,13 +130,13 @@
     <ClCompile Include="Importer.cpp" />
     <ClCompile Include="PiratesLife.cpp" />
     <ClCompile Include="RenderObj.cpp" />
-    <ClCompile Include="vec3Array.cpp" />
+    <ClCompile Include="managedArray.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Importer.h" />
     <ClInclude Include="PiratesLife.h" />
     <ClInclude Include="RenderObj.h" />
-    <ClInclude Include="vec3Array.h" />
+    <ClInclude Include="managedArray.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Dependencies\glew-2.1.0\LICENSE.txt" />

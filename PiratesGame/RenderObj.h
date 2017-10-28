@@ -4,8 +4,8 @@
 #define RENDEROBJ_H_
 
 #include <Vector>
-#include "vec3Array.h"
-#include "vec3Array.cpp"
+#include "managedArray.h"
+#include <glm\vec3.hpp>
 
 namespace PiratesLife {
 
@@ -38,7 +38,8 @@ namespace PiratesLife {
 			//int maxVerts;
 			//int vertCount;
 
-			vec3Array<float> vertices;
+			//vec3Array<float> vertices;
+			managedArray<glm::vec3> myVertices;
 			unsigned int vertexBuffer;
 
 			// how many floats are in one vertex
