@@ -4,6 +4,8 @@
 #define RENDEROBJ_H_
 
 #include <Vector>
+#include "vec3Array.h"
+#include "vec3Array.cpp"
 
 namespace PiratesLife {
 
@@ -32,9 +34,11 @@ namespace PiratesLife {
 			~RenderObj();
 
 		private:
-			float* verts;
-			int maxVerts;
-			int vertCount;
+			//float* verts;
+			//int maxVerts;
+			//int vertCount;
+
+			vec3Array<float> vertices;
 			unsigned int vertexBuffer;
 
 			// how many floats are in one vertex

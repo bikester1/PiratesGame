@@ -130,11 +130,13 @@
     <ClCompile Include="Importer.cpp" />
     <ClCompile Include="PiratesLife.cpp" />
     <ClCompile Include="RenderObj.cpp" />
+    <ClCompile Include="vec3Array.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Importer.h" />
     <ClInclude Include="PiratesLife.h" />
     <ClInclude Include="RenderObj.h" />
+    <ClInclude Include="vec3Array.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Dependencies\glew-2.1.0\LICENSE.txt" />
