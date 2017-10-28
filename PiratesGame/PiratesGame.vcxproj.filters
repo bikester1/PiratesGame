@@ -46,8 +46,6 @@
     <None Include="Models\untitled.mtl" />
     <None Include="Models\untitled.obj" />
     <None Include="Models\Boat.mtl" />
-  </ItemGroup>
-  <ItemGroup>
-    <Object Include="Models\Boat.obj" />
+    <None Include="Models\Boat.obj" />
   </ItemGroup>
 </Project>

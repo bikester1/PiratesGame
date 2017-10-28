@@ -167,7 +167,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Object Include="Models\Boat.obj" />
+    <None Include="Models\Boat.obj">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</DeploymentContent>
+      <FileType>Document</FileType>
+    </None>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
