@@ -17,7 +17,7 @@ namespace PiratesLife {
 
 		glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
 		glEnableVertexAttribArray(0);
-		glVertexAttribPointer(0, vertSize, GL_FLOAT, GL_FALSE, stride, 0);
+		glVertexAttribPointer(0, vertSize, GL_FLOAT, GL_TRUE, stride, 0);
 		glDrawArrays(GL_LINE_LOOP, 0, vertCount / vertSize);
 
 		glDisableVertexAttribArray(0);
@@ -81,7 +81,7 @@ namespace PiratesLife {
 
 		glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
 		glBufferData(GL_ARRAY_BUFFER, sizeof(float) * vertCount, verts, GL_STATIC_DRAW);
-		glVertexAttribPointer(0, vertSize, GL_FLOAT, GL_FALSE, stride, 0);
+		glVertexAttribPointer(0, vertSize, GL_FLOAT, GL_TRUE, stride, 0);
 		glEnableVertexAttribArray(0);
 		//glGetBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(float) * vertCount, temp);
 
