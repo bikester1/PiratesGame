@@ -13,7 +13,6 @@
 #include "RenderObj.h"
 #include "PiratesLife.h"
 #include "InputHandler.h"
-#include "Importer.h"
 
 
 int main(void)
@@ -25,10 +24,11 @@ int main(void)
 	cam.setPos(glm::vec3(0.0f, 0.0f, 0.0f));
 	PiratesLife::RenderObj obj = PiratesLife::RenderObj(&cam);
 	PiratesLife::InputHandler::setCam(&cam);
-	PiratesLife::Importer importer;
+	cam.setSpeed(0.3f);
 	unsigned int program;
 	int i = 0;
 
+	/*
 	// define some verticies to draw 
 	float verts[24] = {
 		1.072369f, -0.950795f, -1.224498f,
@@ -48,7 +48,7 @@ int main(void)
 	for (i = 0; i + 2 < sizeof(verts) / sizeof(float); i += 3) {
 		obj.putVert(verts[i], verts[i + 1], verts[i + 2]);
 	}
-
+	*/
 
 	// init graphics libraries
 	if (!initGL(&window, width, height, "Pirates Life For Me!!")) {
@@ -61,14 +61,17 @@ int main(void)
 		return -1;
 	}
 
-	importer.ImportVerticesFromOBJ("Models\\untitled.obj");
+	//obj.setVertArray(importer.ImportVerticesFromOBJ("Models\\untitled.obj"));
 
 	// init and update buffers
+	obj.importOBJ("Models\\untitled.obj");
 	obj.initBuffers();
 	obj.updateVertBuffer();
 
 	// init MVP
 	unsigned int matrixId = glGetUniformLocation(program, "MVP");
+
+	int j;
 
 	glm::vec3 rot;
 
@@ -86,16 +89,16 @@ int main(void)
 
 		obj.render();
 
-		//rot = cam.getRot();
-		//cam.setRot(glm::vec3(rot.x, rot.y + 1, rot.z));
-		//glBegin(GL_LINES);
-		//glVertex3f(-1.0f, 0.0f, 1.0f);
-		//glVertex3f(1.0f, 0.0f, 1.0f);
-		//glVertex3f(1.0f, 0.0f, 1.0f);
-		//glVertex3f(1.0f, 1.0f, 1.0f);
-		//glVertex3f(1.0f, 1.0f, 1.0f);
-		//glVertex3f(-1.0f, 0.0f, 1.0f);
-		//glEnd();
+		for (i = 0; i < 20; i++) {
+			for (j = 0; j < 20; j++) {
+				obj.setPosX(3.0f * j);
+				obj.setPosZ(5.0f * i);
+				glUniformMatrix4fv(matrixId, 1, GL_FALSE, &(obj.getMVP()[0][0]));
+				obj.render();
+			}
+		}
+		obj.setPosX(0.0f);
+
 		// Swap front and back buffers
 		glfwSwapBuffers(window);
 
@@ -138,6 +141,10 @@ int initGL(GLFWwindow **window, int width, int height, char *str) {
 
 	// configure cursor
 	glfwSetInputMode(*window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+
+	glEnable(GL_DEPTH_TEST);
+
+	glDepthFunc(GL_LESS);
 
 	return 1;
 }

@@ -1,11 +1,15 @@
 #version 330 core
 
 layout(location = 0) in vec3 vertexPosition_modelSpace;
+out vec3 passed;
 
 uniform mat4 MVP;
 
 void main() {
 
 	gl_Position = MVP * vec4(vertexPosition_modelSpace, 1);
+
+	vec4 pos = vec4(vertexPosition_modelSpace, 1);
+	passed = vec3(pos.x, pos.y, pos.z);
 
 }

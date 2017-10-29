@@ -3,9 +3,13 @@
 #ifndef RENDEROBJ_H_
 #define RENDEROBJ_H_
 
-#include <Vector>
 #include "ManagedArray.h"
 #include "Camera.h"
+
+#include <Vector>
+#include <fstream>
+#include <iostream>
+
 #include <glm/vec3.hpp>
 
 namespace PiratesLife {
@@ -15,6 +19,9 @@ namespace PiratesLife {
 		public:
 			
 			void render();
+			
+			// import obj file into myVertices
+			void importOBJ(std::string filePath);
 
 			// Transfer saved vertices to VBO
 			void updateVertBuffer();
@@ -23,11 +30,11 @@ namespace PiratesLife {
 			void initBuffers();
 
 			// getters
-			float getPosX(float x);
+			float getPosX();
 
-			float getPosY(float y);
+			float getPosY();
 
-			float getPosZ(float z);
+			float getPosZ();
 
 			glm::vec3 getPos(float x, float y, float z);
 
@@ -45,7 +52,6 @@ namespace PiratesLife {
 
 			void setPos(float x, float y, float z);
 
-
 			// Constructor
 			RenderObj();
 			RenderObj(int vertSize);
@@ -55,11 +61,12 @@ namespace PiratesLife {
 			~RenderObj();
 
 		private:
-			ManagedArray<glm::vec3> myVertices;
+			//ManagedArray<glm::vec3> myVertices;
 			unsigned int vertexBuffer;
 			glm::vec3 pos;
 			glm::vec3 rot;
 			glm::vec3 scale;
+			std::vector<glm::vec3> myVertices;
 			PiratesLife::Camera *cam;
 
 			// how many floats are in one vertex

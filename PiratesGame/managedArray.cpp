@@ -10,6 +10,7 @@ namespace PiratesLife {
 			ManagedArray<T>::expandArray();
 
 		myArray[curIndex++] = itm;
+		//glm::vec3 test = myArray[curIndex - 1];
 	}
 
 	template <class T>

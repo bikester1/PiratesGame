@@ -130,7 +130,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp" />
-    <ClCompile Include="Importer.cpp" />
     <ClCompile Include="InputHandler.cpp" />
     <ClCompile Include="PiratesLife.cpp" />
     <ClCompile Include="RenderObj.cpp" />
@@ -138,7 +137,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h" />
-    <ClInclude Include="Importer.h" />
     <ClInclude Include="InputHandler.h" />
     <ClInclude Include="PiratesLife.h" />
     <ClInclude Include="RenderObj.h" />
