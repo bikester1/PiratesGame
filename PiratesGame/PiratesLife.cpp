@@ -12,16 +12,18 @@
 #include <String>
 #include "RenderObj.h"
 #include "PiratesLife.h"
+#include "InputHandler.h"
 
 
 int main(void)
 {
 	GLFWwindow *window = NULL;
-	float width = 1024;
-	float height = 512;
-	PiratesLife::Camera cam(45.0f, width / height, 0.1f, 1000.0f);
+	int width = 1024;
+	int height = 512;
+	PiratesLife::Camera cam(70.0f, (float)width / (float)height, 0.1f, 1000.0f);
 	cam.setPos(glm::vec3(0.0f, 0.0f, 0.0f));
 	PiratesLife::RenderObj obj = PiratesLife::RenderObj(&cam);
+	PiratesLife::InputHandler::setCam(&cam);
 	unsigned int program;
 	int i = 0;
 
@@ -41,10 +43,10 @@ int main(void)
 	};
 
 	// give our obj the vertices
-	for (i = 0; i + 2 < sizeof(verts) / sizeof(float); i+=3) {
+	for (i = 0; i + 2 < sizeof(verts) / sizeof(float); i += 3) {
 		obj.putVert(verts[i], verts[i + 1], verts[i + 2]);
 	}
-		
+
 
 	// init graphics libraries
 	if (!initGL(&window, width, height, "Pirates Life For Me!!")) {
@@ -65,19 +67,23 @@ int main(void)
 	unsigned int matrixId = glGetUniformLocation(program, "MVP");
 
 	glm::vec3 rot;
+
+	glfwSetKeyCallback(window, PiratesLife::InputHandler::procInput);
+	glfwSetCursorPosCallback(window, PiratesLife::InputHandler::procCursor);
 	// Loop until the user closes the window
 	while (!glfwWindowShouldClose(window))
 	{
 		// Render here
+		cam.updatePos();
+
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		glUseProgram(program);
 		glUniformMatrix4fv(matrixId, 1, GL_FALSE, &(obj.getMVP()[0][0]));
 
 		obj.render();
 
-		rot = cam.getRot();
-		std::cout << rot.y << std::endl;
-		cam.setRot(glm::vec3(rot.x, rot.y + 1, rot.z));
+		//rot = cam.getRot();
+		//cam.setRot(glm::vec3(rot.x, rot.y + 1, rot.z));
 		//glBegin(GL_LINES);
 		//glVertex3f(-1.0f, 0.0f, 1.0f);
 		//glVertex3f(1.0f, 0.0f, 1.0f);
@@ -106,7 +112,7 @@ int initGL(GLFWwindow **window, int width, int height, char *str) {
 		printf("Error: glfw failed to initialize.\n");
 		return -1;
 	}
-		
+
 
 	// Create a windowed mode window and its OpenGL context
 	*window = glfwCreateWindow(width, height, str, NULL, NULL);
@@ -126,6 +132,8 @@ int initGL(GLFWwindow **window, int width, int height, char *str) {
 		return -1;
 	}
 
+	// configure cursor
+	glfwSetInputMode(*window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
 	return 1;
 }
@@ -197,4 +205,5 @@ int loadShaders(char *vertexShaderPath, char *fragmentShaderPath) {
 
 	return program;
 }
+
 

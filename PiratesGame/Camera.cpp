@@ -1,11 +1,16 @@
 #include "Camera.h"
-#include <math.h>
+
+#include <GL/glew.h>
+#include <GLFW/glfw3.h>
+
 #include <glm/trigonometric.hpp>
 #include <glm/gtx/transform.hpp>
 #include <glm/gtx/rotate_vector.hpp>
 
-namespace PiratesLife {
+#include <math.h>
 
+namespace PiratesLife {
+	// getters
 	glm::mat4x4 Camera::getPerspectiveMat() {
 		if (cameraUpdated)
 			updateMats();
@@ -20,8 +25,6 @@ namespace PiratesLife {
 		return viewMat;
 	}
 
-
-	// getters
 	glm::vec3 Camera::getPos() {
 		return pos;
 	}
@@ -55,6 +58,26 @@ namespace PiratesLife {
 		lookAt = glm::rotateY(lookAt, glm::radians(rot.y));
 
 		return lookAt;
+	}
+
+	bool Camera::getForward() {
+		return forward;
+	}
+
+	bool Camera::getBack() {
+		return back;
+	}
+
+	bool Camera::getLeft() {
+		return left;
+	}
+
+	bool Camera::getRight() {
+		return right;
+	}
+
+	float Camera::getSpeed() {
+		return speed;
 	}
 
 
@@ -108,13 +131,70 @@ namespace PiratesLife {
 		Camera::aspect = aspect;
 	}
 
+	void Camera::setForward(bool forward) {
+		Camera::forward = forward;
+	}
+
+	void Camera::setBack(bool back) {
+		Camera::back = back;
+	}
+
+	void Camera::setLeft(bool left) {
+		Camera::left = left;
+	}
+
+	void Camera::setRight(bool right) {
+		Camera::right = right;
+	}
+
+	void Camera::setSpeed(float speed) {
+		Camera::speed = speed;
+	}
+
 	void Camera::updateMats() {
 		perspectiveMat = glm::perspective(glm::radians(fov), aspect, nearCP, farCP);
-		viewMat = glm::lookAt(pos, getLookAt(), glm::vec3(0, 1, 0));
+		viewMat = glm::rotate(glm::mat4x4(1.0f), glm::radians(rot.x), glm::vec3(1.0f, 0.0f, 0.0f));
+		viewMat = glm::rotate(viewMat, glm::radians(rot.y), glm::vec3(0.0f, 1.0f, 0.0f));
+		viewMat = glm::rotate(viewMat, glm::radians(rot.z), glm::vec3(0.0f, 0.0f, 1.0f));
+		viewMat = glm::translate(viewMat, glm::vec3(-pos.x, -pos.y, -pos.z));
+
 
 		cameraUpdated = false;
 	}
 
+	void Camera::updatePos() {
+
+		cameraUpdated = true;
+		glm::vec3 vec = glm::vec3(0.0f, 0.0f, 0.0f);
+
+		if (forward)
+			vec.z -= 1.0f;
+
+		if (back)
+			vec.z += 1.0f;
+
+		if (left)
+			vec.x -= 1.0f;
+
+		if (right)
+			vec.x += 1.0f;
+
+
+		moveTowards(vec);
+	}
+
+	void Camera::moveTowards(glm::vec3 vec) {
+		if (vec.x == 0.0f && vec.y == 0.0f && vec.z == 0.0f)
+			return;
+
+		vec = glm::normalize(vec);
+		vec = glm::rotate(vec, glm::radians(-rot.x), glm::vec3(1.0f, 0.0f, 0.0f));
+		vec = glm::rotate(vec, glm::radians(-rot.y), glm::vec3(0.0f, 1.0f, 0.0f));
+		vec = glm::rotate(vec, glm::radians(-rot.z), glm::vec3(0.0f, 0.0f, 1.0f));
+
+		vec = vec * speed;
+		pos += vec;
+	}
 
 	Camera::Camera(float fov, float aspect, float nearCP, float farCP)
 	{
@@ -124,6 +204,11 @@ namespace PiratesLife {
 		Camera::farCP = farCP;
 		rot = glm::vec3(0.0f, 0.0f, 0.0f);
 		pos = glm::vec3(0.0f, 0.0f, 10.0f);
+		forward = false;
+		back = false;
+		left = false;
+		right = false;
+		speed = 0.1f;
 	}
 
 
