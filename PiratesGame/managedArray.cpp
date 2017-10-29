@@ -1,31 +1,31 @@
-#include "managedArray.h"
+#include "ManagedArray.h"
 #include <float.h>
 
 namespace PiratesLife {
 
 	template <class T>
-	void managedArray<T>::putVec(T itm) {
+	void ManagedArray<T>::putVec(T itm) {
 
 		if (curIndex > maxSize / 2)
-			managedArray<T>::expandArray();
+			ManagedArray<T>::expandArray();
 
 		myArray[curIndex++] = itm;
 	}
 
 	template <class T>
-	int managedArray<T>::setVec(int i, T itm) {
+	int ManagedArray<T>::setVec(int i, T itm) {
 		if (i >= curIndex)
 			return -1;
 
 		if (curIndex > maxSize / 2)
-			managedArray<T>::expandArray();
+			ManagedArray<T>::expandArray();
 
 		myArray[i] = itm;
 		return 1;
 	}
 
 	template <class T>
-	void managedArray<T>::expandArray() {
+	void ManagedArray<T>::expandArray() {
 		int i = 0;
 
 		maxSize *= 2;
@@ -40,29 +40,29 @@ namespace PiratesLife {
 	}
 
 	template <class T>
-	T managedArray<T>::getVec(int i) {
+	T ManagedArray<T>::getVec(int i) {
 		return myArray[i];
 	}
 
 	template <class T>
-	int managedArray<T>::getSize() {
+	int ManagedArray<T>::getSize() {
 		return curIndex;
 	}
 
 	template <class T>
-	T *managedArray<T>::ptr() {
+	T *ManagedArray<T>::ptr() {
 		return myArray;
 	}
 
 	template <class T>
-	managedArray<T>::managedArray() {
+	ManagedArray<T>::ManagedArray() {
 		curIndex = 0;
 		maxSize = 20;
 		myArray = new T[20];
 	}
 
 	template <class T>
-	managedArray<T>::~managedArray() {
+	ManagedArray<T>::~ManagedArray() {
 		delete myArray;
 	}
 

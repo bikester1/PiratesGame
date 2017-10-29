@@ -4,7 +4,7 @@
 #define RENDEROBJ_H_
 
 #include <Vector>
-#include "managedArray.h"
+#include "ManagedArray.h"
 #include "Camera.h"
 #include <glm/vec3.hpp>
 
@@ -45,6 +45,7 @@ namespace PiratesLife {
 
 			void setPos(float x, float y, float z);
 
+
 			// Constructor
 			RenderObj();
 			RenderObj(int vertSize);
@@ -54,7 +55,7 @@ namespace PiratesLife {
 			~RenderObj();
 
 		private:
-			managedArray<glm::vec3> myVertices;
+			ManagedArray<glm::vec3> myVertices;
 			unsigned int vertexBuffer;
 			glm::vec3 pos;
 			glm::vec3 rot;

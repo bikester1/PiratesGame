@@ -134,7 +134,7 @@
     <ClCompile Include="InputHandler.cpp" />
     <ClCompile Include="PiratesLife.cpp" />
     <ClCompile Include="RenderObj.cpp" />
-    <ClCompile Include="managedArray.cpp" />
+    <ClCompile Include="ManagedArray.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h" />
@@ -142,7 +142,7 @@
     <ClInclude Include="InputHandler.h" />
     <ClInclude Include="PiratesLife.h" />
     <ClInclude Include="RenderObj.h" />
-    <ClInclude Include="managedArray.h" />
+    <ClInclude Include="ManagedArray.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Dependencies\glew-2.1.0\LICENSE.txt" />
@@ -167,12 +167,6 @@
   <ItemGroup>
     <None Include="Models\Boat.mtl" />
     <None Include="Models\untitled.mtl" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Models\untitled.obj">
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</DeploymentContent>
-      <FileType>Document</FileType>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="Models\Boat.obj">

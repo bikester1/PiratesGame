@@ -11,7 +11,7 @@
 #include <glm/vec3.hpp>
 #include <glm/gtx/transform.hpp>
 
-#include "managedArray.cpp"
+#include "ManagedArray.cpp"
 
 namespace PiratesLife {
 	
@@ -21,7 +21,7 @@ namespace PiratesLife {
 		glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
 		glEnableVertexAttribArray(0);
 		glVertexAttribPointer(0, vertSize, GL_FLOAT, GL_TRUE, stride, 0);
-		glDrawArrays(GL_TRIANGLES, 0, myVertices.getSize());
+		glDrawArrays(GL_LINE_LOOP, 0, myVertices.getSize());
 
 		glDisableVertexAttribArray(0);
 	}

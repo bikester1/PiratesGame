@@ -13,6 +13,7 @@
 #include "RenderObj.h"
 #include "PiratesLife.h"
 #include "InputHandler.h"
+#include "Importer.h"
 
 
 int main(void)
@@ -24,22 +25,23 @@ int main(void)
 	cam.setPos(glm::vec3(0.0f, 0.0f, 0.0f));
 	PiratesLife::RenderObj obj = PiratesLife::RenderObj(&cam);
 	PiratesLife::InputHandler::setCam(&cam);
+	PiratesLife::Importer importer;
 	unsigned int program;
 	int i = 0;
 
 	// define some verticies to draw 
-	float verts[9] = {
-		//1.072369f, -0.950795f, -1.224498f,
-		//1.072369f, -0.950795f, 0.775502f,
-		//-0.927631f, -0.950795f, 0.775502f,
-		//-0.927631f, -0.950795f, -1.224499f,
-		//1.072370f, 1.049205f, -1.224498f,
-		//1.072368f, 1.049205f, 0.775502f,
-		//-0.927631f, 1.049205f, 0.775501f,
-		//-0.927631f, 1.049205f, -1.224498f
-		0.0f, 0.0f, 2.0f,
-		1.0f, 0.0f, -1.0f,
-		1.0f, 1.0f, -1.0f
+	float verts[24] = {
+		1.072369f, -0.950795f, -1.224498f,
+		1.072369f, -0.950795f, 0.775502f,
+		-0.927631f, -0.950795f, 0.775502f,
+		-0.927631f, -0.950795f, -1.224499f,
+		1.072370f, 1.049205f, -1.224498f,
+		1.072368f, 1.049205f, 0.775502f,
+		-0.927631f, 1.049205f, 0.775501f,
+		-0.927631f, 1.049205f, -1.224498f
+		//0.0f, 0.0f, 2.0f,
+		//1.0f, 0.0f, -1.0f,
+		//1.0f, 1.0f, -1.0f
 	};
 
 	// give our obj the vertices
@@ -54,10 +56,12 @@ int main(void)
 		return -1;
 	}
 
-	if (!(program = loadShaders("C:\\Dev\\Games\\PiratesGame\\PiratesGame\\Shaders\\VertexShader.txt", "C:\\Dev\\Games\\PiratesGame\\PiratesGame\\Shaders\\FragmentShader.txt"))) {
+	if (!(program = loadShaders("Shaders\\VertexShader.txt", "Shaders\\FragmentShader.txt"))) {
 		printf("Exiting Program: shader error\n");
 		return -1;
 	}
+
+	importer.ImportVerticesFromOBJ("Models\\untitled.obj");
 
 	// init and update buffers
 	obj.initBuffers();

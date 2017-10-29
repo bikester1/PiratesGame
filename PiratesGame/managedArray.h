@@ -3,23 +3,23 @@
 namespace PiratesLife {
 
 	template <class T>
-	class managedArray
+	class ManagedArray
 	{
 	public:
 
-		void managedArray::putVec(T itm);
+		void ManagedArray::putVec(T itm);
 
-		int managedArray<T>::setVec(int i, T itm);
+		int ManagedArray<T>::setVec(int i, T itm);
 
-		T managedArray::getVec(int i);
+		T ManagedArray::getVec(int i);
 
-		T *managedArray<T>::ptr();
+		T *ManagedArray<T>::ptr();
 
-		int managedArray<T>::getSize();
+		int ManagedArray<T>::getSize();
 
-		managedArray();
+		ManagedArray();
 
-		~managedArray();
+		~ManagedArray();
 
 	private:
 		T *myArray;

@@ -1,10 +1,23 @@
 #pragma once
 #include <String>
-class Importer
-{
-public:
-	float **Importer::ImportVerticesFromOBJ(std::string filePath);
-	Importer();
-	~Importer();
-};
 
+namespace PiratesLife {
+
+	struct vertexBufferRetStruct {
+		int length;
+		float **vertices;
+	};
+
+	class Importer
+	{
+	public:
+
+		vertexBufferRetStruct *Importer::ImportVerticesFromOBJ(std::string filePath);
+
+		Importer();
+
+		~Importer();
+
+	};
+
+}
