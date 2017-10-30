@@ -28,6 +28,9 @@ namespace PiratesLife {
 
 		if (myVertices.size() == 0)
 			return;
+		
+		getMVP();
+
 
 		// enable vertex attribute
 		glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
@@ -165,8 +168,12 @@ namespace PiratesLife {
 	void RenderObj::initBuffers() {
 
 		// generates buffer 
-		if(vertexBuffer == 0)
+		if (vertexBuffer == 0) {
 			glGenBuffers(1, &vertexBuffer);
+			MVPMatrix = glGetUniformLocation(program, "MVP");
+			modelMatrix = glGetUniformLocation(program, "M");
+			viewMatrix = glGetUniformLocation(program, "V");
+		}
 
 	}
 	
@@ -213,8 +220,14 @@ namespace PiratesLife {
 		rotateMat = glm::rotate(rotateMat, rot.y, glm::vec3(0.0f, 1.0f, 0.0f));
 		rotateMat = glm::rotate(rotateMat, rot.z, glm::vec3(0.0f, 0.0f, 1.0f));
 		glm::mat4x4 modelMat = glm::translate(glm::mat4x4(1.0f), pos) * rotateMat * glm::scale(glm::mat4x4(0.1f),scale);
+		glm::mat4x4 MVPMat = (perspectiveMat * viewMat * modelMat);
 
-		return perspectiveMat * viewMat * modelMat;
+
+		glUniformMatrix4fv(MVPMatrix, 1, GL_FALSE, &(MVPMat[0][0]));
+		glUniformMatrix4fv(viewMatrix, 1, GL_FALSE, &(viewMat[0][0]));
+		glUniformMatrix4fv(modelMatrix, 1, GL_FALSE, &(modelMat[0][0]));
+
+		return MVPMat;
 	}
 
 	int RenderObj::putVert(float x, float y, float z) {
@@ -238,6 +251,10 @@ namespace PiratesLife {
 
 	void RenderObj::setPos(float x, float y, float z) {
 		pos = glm::vec3(x, y, z);
+	}
+
+	void RenderObj::setProgram(unsigned int program) {
+		RenderObj::program = program;
 	}
 
 	

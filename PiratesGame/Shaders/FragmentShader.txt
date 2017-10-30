@@ -1,12 +1,14 @@
 #version 330 core
 
 in vec3 passed;
+in vec3 n;
+in vec3 l;
 out vec3 color;
 
-
+float cosTheta = dot(n, l);
 
 void main() {
 	
-	color = vec3(passed.x, passed.y, passed.z);
+	color = (vec3(0.75, 0.75, 0.75) * cosTheta) + vec3(0.3,0.3,0.3);
 
 }

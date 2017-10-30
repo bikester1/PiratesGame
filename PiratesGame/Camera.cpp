@@ -8,6 +8,7 @@
 #include <glm/gtx/rotate_vector.hpp>
 
 #include <math.h>
+#include <iostream>
 
 namespace PiratesLife {
 	// getters
@@ -193,6 +194,7 @@ namespace PiratesLife {
 		vec = glm::rotate(vec, glm::radians(-rot.z), glm::vec3(0.0f, 0.0f, 1.0f));
 
 		vec = vec * speed;
+		std::cout << vec.x << " " << vec.y << " " << vec.z << " " << std::endl;
 		pos += vec;
 	}
 

@@ -52,6 +52,8 @@ namespace PiratesLife {
 
 			void setPos(float x, float y, float z);
 
+			void setProgram(unsigned int program);
+
 			// Constructor
 			RenderObj();
 			RenderObj(int vertSize);
@@ -63,6 +65,10 @@ namespace PiratesLife {
 		private:
 			//ManagedArray<glm::vec3> myVertices;
 			unsigned int vertexBuffer;
+			unsigned int MVPMatrix;
+			unsigned int modelMatrix;
+			unsigned int viewMatrix;
+			unsigned int program;
 			glm::vec3 pos;
 			glm::vec3 rot;
 			glm::vec3 scale;

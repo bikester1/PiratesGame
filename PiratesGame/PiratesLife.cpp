@@ -64,12 +64,10 @@ int main(void)
 	//obj.setVertArray(importer.ImportVerticesFromOBJ("Models\\untitled.obj"));
 
 	// init and update buffers
-	obj.importOBJ("Models\\test2.obj");
+	obj.importOBJ("Models\\test3.obj");
+	obj.setProgram(program);
 	obj.initBuffers();
 	obj.updateVertBuffer();
-
-	// init MVP
-	unsigned int matrixId = glGetUniformLocation(program, "MVP");
 
 	int j;
 
@@ -78,6 +76,9 @@ int main(void)
 	glfwSetKeyCallback(window, PiratesLife::InputHandler::procInput);
 	glfwSetCursorPosCallback(window, PiratesLife::InputHandler::procCursor);
 	// Loop until the user closes the window
+
+	//glCullFace(GL_BACK);
+
 	while (!glfwWindowShouldClose(window))
 	{
 		// Render here
@@ -85,7 +86,6 @@ int main(void)
 
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		glUseProgram(program);
-		glUniformMatrix4fv(matrixId, 1, GL_FALSE, &(obj.getMVP()[0][0]));
 
 		obj.render();
 
@@ -93,7 +93,6 @@ int main(void)
 			for (j = 0; j < 20; j++) {
 				obj.setPosX(3.0f * j);
 				obj.setPosZ(5.0f * i);
-				glUniformMatrix4fv(matrixId, 1, GL_FALSE, &(obj.getMVP()[0][0]));
 				obj.render();
 			}
 		}
