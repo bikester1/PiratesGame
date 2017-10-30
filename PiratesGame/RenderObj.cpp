@@ -6,7 +6,6 @@
 */
 
 #include "RenderObj.h"
-#include "ManagedArray.cpp"
 
 #include <fstream>
 #include <iostream>
@@ -27,24 +26,51 @@ namespace PiratesLife {
 		if (vertexBuffer == 0)
 			initBuffers();
 
-		glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
-		glEnableVertexAttribArray(0);
-		glVertexAttribPointer(0, vertSize, GL_FLOAT, GL_TRUE, stride, 0);
-		glDrawArrays(GL_TRIANGLES, 0, myVertices.size());
+		if (myVertices.size() == 0)
+			return;
 
+		// enable vertex attribute
+		glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
+		glVertexAttribPointer(0, 3, GL_FLOAT, GL_TRUE, stride, vertexAttribOffset);
+		glEnableVertexAttribArray(0);
+
+		// enable normal attribute if enabled
+		if (hasNormals == true) {
+			glVertexAttribPointer(1, 3, GL_FLOAT, GL_TRUE, stride, normalAttribOffset);
+			glEnableVertexAttribArray(1);
+		}
+
+		// enable texture attribute if enabled
+		if (hasTexture == true) {
+			glVertexAttribPointer(2, 2, GL_FLOAT, GL_TRUE, stride, textureAttribOffset);
+			glEnableVertexAttribArray(2);
+		}
+
+		// draw the buffer
+		glDrawArrays(GL_TRIANGLES, 0, numOfVertices);
+
+
+		// disable Vertex Attribs to be used in another draw call
 		glDisableVertexAttribArray(0);
+
+		if(hasNormals == true)
+			glDisableVertexAttribArray(1);
+
+		if(hasTexture == true)
+			glDisableVertexAttribArray(2);
 	}
 
 	void RenderObj::importOBJ(std::string filePath) {
 		// our fileStream to the obj file
 		std::ifstream fileStream(filePath.c_str(), std::ios::in);
 		std::string line;
-		std::vector<glm::vec3> tempVecArr;
+		std::vector<glm::vec3> tempVertArr;
 		std::vector<glm::vec3> tempNormArr;
 		std::vector<glm::vec3> tempTexArr;
 		std::vector<glm::vec3> *faceArr = new std::vector<glm::vec3>();
 		std::string::size_type index;
-		int i, vertIndex[3];
+		int i, vertIndex[3], normIndex[3], texIndex[3];
+
 		glm::vec3 tempVec;
 
 		// clear our previously hedl vertices
@@ -61,7 +87,7 @@ namespace PiratesLife {
 				else if (line[0] == 'v' && line[1] == ' ') {
 
 					sscanf_s(line.c_str(), "%*s %f %f %f", &tempVec.x, &tempVec.y, &tempVec.z);
-					tempVecArr.push_back(tempVec);
+					tempVertArr.push_back(tempVec);
 
 				}
 				else if (line[0] == 'v' && line[1] == 'n') {
@@ -78,29 +104,74 @@ namespace PiratesLife {
 				}
 				// cehck if face
 				else if (line[0] == 'f' && line[1] == ' ') {
+					// if we only have vertices parse out faces with only vertices
+					if (tempVertArr.size() > 0 && tempNormArr.size() == 0 && tempTexArr.size() == 0) {
 
-					sscanf_s(line.c_str(), "%*s %d %d %d", &vertIndex[0], &vertIndex[1], &vertIndex[2]);
-					myVertices.push_back(tempVecArr[vertIndex[0] - 1]);
-					myVertices.push_back(tempVecArr[vertIndex[1] - 1]);
-					myVertices.push_back(tempVecArr[vertIndex[2] - 1]);
+						sscanf_s(line.c_str(), "%*s %d %d %d", &vertIndex[0], &vertIndex[1], &vertIndex[2]);
+						myVertices.push_back(tempVertArr[vertIndex[0] - 1]);
+						myVertices.push_back(tempVertArr[vertIndex[1] - 1]);
+						myVertices.push_back(tempVertArr[vertIndex[2] - 1]);
 
+					}
+					// if we have vertices and normals
+					else if (tempVertArr.size() > 0 && tempNormArr.size() > 0 && tempTexArr.size() == 0) {
+
+						sscanf_s(line.c_str(), "%*s %d//%d %d//%d %d//%d", &vertIndex[0], &normIndex[0], &vertIndex[1], &normIndex[1], &vertIndex[2], &normIndex[2]);
+						myVertices.push_back(tempVertArr[vertIndex[0] - 1]);
+						myVertices.push_back(tempNormArr[normIndex[0] - 1]);
+						myVertices.push_back(tempVertArr[vertIndex[1] - 1]);
+						myVertices.push_back(tempNormArr[normIndex[1] - 1]);
+						myVertices.push_back(tempVertArr[vertIndex[2] - 1]);
+						myVertices.push_back(tempNormArr[normIndex[2] - 1]);
+
+					}
 				}
 			}
 		}
+
+		if (tempVertArr.size() > 0 && tempNormArr.size() == 0 && tempTexArr.size() == 0) {
+			stride = sizeof(glm::vec3);
+			vertexAttribOffset = (GLvoid**)0;
+			normalAttribOffset = (GLvoid**)0;
+			textureAttribOffset = (GLvoid**)0;
+			hasNormals = false;
+			hasTexture = false;
+			numOfVertices = myVertices.size();
+		}
 		
+		else if (tempVertArr.size() > 0 && tempNormArr.size() > 0 && tempTexArr.size() == 0) {
+			stride = sizeof(glm::vec3) * 2;
+			vertexAttribOffset = (GLvoid**)0;
+			normalAttribOffset = (GLvoid**)sizeof(glm::vec3);
+			textureAttribOffset = (GLvoid**)0;
+			hasNormals = true;
+			hasTexture = false;
+			numOfVertices = myVertices.size()/2;
+		}
+
+		else if (tempVertArr.size() > 0 && tempNormArr.size() > 0 && tempTexArr.size() > 0) {
+			stride = sizeof(glm::vec3) * 3;
+			vertexAttribOffset = (GLvoid**)0;
+			normalAttribOffset = (GLvoid**)sizeof(glm::vec3);
+			textureAttribOffset = (GLvoid**)(sizeof(glm::vec3) * 2);
+			hasNormals = true;
+			hasTexture = true;
+			numOfVertices = myVertices.size()/3;
+		}
+
 	}
 
 	// initialize buffers
 	void RenderObj::initBuffers() {
 
 		// generates buffer 
-		glGenBuffers(1, &vertexBuffer);
+		if(vertexBuffer == 0)
+			glGenBuffers(1, &vertexBuffer);
 
 	}
 	
 	// Place data into the buffer
 	void RenderObj::updateVertBuffer() {
-
 		// init vbo if it hasnt already been
 		if (vertexBuffer == 0)
 			initBuffers();
@@ -112,7 +183,8 @@ namespace PiratesLife {
 		// bind buffers and add data
 		glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
 		glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec3) * myVertices.size(), &myVertices[0], GL_STATIC_DRAW);
-		glVertexAttribPointer(0, vertSize, GL_FLOAT, GL_FALSE, stride, 0);
+
+		glVertexAttribPointer(0, 3, GL_FLOAT, GL_TRUE, stride, vertexAttribOffset);
 		glEnableVertexAttribArray(0);
 		//glGetBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(float) * vertCount, temp);
 

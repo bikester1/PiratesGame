@@ -64,7 +64,7 @@ int main(void)
 	//obj.setVertArray(importer.ImportVerticesFromOBJ("Models\\untitled.obj"));
 
 	// init and update buffers
-	obj.importOBJ("Models\\untitled.obj");
+	obj.importOBJ("Models\\test2.obj");
 	obj.initBuffers();
 	obj.updateVertBuffer();
 

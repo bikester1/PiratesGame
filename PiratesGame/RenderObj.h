@@ -68,9 +68,16 @@ namespace PiratesLife {
 			glm::vec3 scale;
 			std::vector<glm::vec3> myVertices;
 			PiratesLife::Camera *cam;
+			bool hasNormals;
+			bool hasTexture;
+
+			GLvoid** vertexAttribOffset;
+			GLvoid** normalAttribOffset;
+			GLvoid** textureAttribOffset;
 
 			// how many floats are in one vertex
 			int vertSize;
+			int numOfVertices;
 
 			// how far apart are each vertex
 			int stride;
