@@ -3,12 +3,13 @@
 in vec3 passed;
 in vec3 n;
 in vec3 l;
+in float distanceSquare;
 out vec3 color;
 
-float cosTheta = dot(n, l);
+float cosTheta = clamp(dot(n, l), 0, 1);
 
 void main() {
 	
-	color = (vec3(0.75, 0.75, 0.75) * cosTheta) + vec3(0.3,0.3,0.3);
+	color = (vec3(1, 1, 1) * cosTheta) + vec3(0.3,0.3,0.3) / distanceSquare;
 
 }

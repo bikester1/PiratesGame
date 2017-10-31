@@ -18,13 +18,13 @@
 int main(void)
 {
 	GLFWwindow *window = NULL;
-	int width = 1024;
-	int height = 512;
+	int width = 1920;
+	int height = 1000;
 	PiratesLife::Camera cam(70.0f, (float)width / (float)height, 0.1f, 1000.0f);
 	cam.setPos(glm::vec3(0.0f, 0.0f, 0.0f));
 	PiratesLife::RenderObj obj = PiratesLife::RenderObj(&cam);
 	PiratesLife::InputHandler::setCam(&cam);
-	cam.setSpeed(0.3f);
+	cam.setSpeed(0.1f);
 	unsigned int program;
 	int i = 0;
 
@@ -87,7 +87,7 @@ int main(void)
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		glUseProgram(program);
 
-		obj.render();
+		//obj.render();
 
 		for (i = 0; i < 20; i++) {
 			for (j = 0; j < 20; j++) {
