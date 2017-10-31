@@ -6,10 +6,47 @@ in vec3 l;
 in float distanceSquare;
 out vec3 color;
 
-float cosTheta = clamp(dot(n, l), 0, 1);
+float cosTheta = clamp(dot(n, l), 0, 100);
+float intensity = 10;
+float LI = ((0.67) * cosTheta * 1 / distanceSquare) + .05;
+float hue = 207;
+float s = 0.69;
+
+float c = (1 - abs((2 * LI) - 1));
+float x = c * (1 - abs(mod((hue/60), 2) - 1));
+float m = LI - c/1;
 
 void main() {
 	
-	color = (vec3(1, 1, 1) * cosTheta) + vec3(0.3,0.3,0.3) / distanceSquare;
+	vec3 intermColor;
+
+	int test = int(hue/60);
+
+	switch(test){	
+		case 0:
+			intermColor = vec3(c, x, 0);
+			break;
+		case 1:
+			intermColor = vec3(x, c, 0);
+			break;
+		case 2:
+			intermColor = vec3(0, c, x);
+			break;
+		case 3:
+			intermColor = vec3(0, x, c);
+			break;
+		case 4:
+			intermColor = vec3(x, 0, c);
+			break;
+		case 5:
+			intermColor = vec3(c, 0, x);
+			break;
+	}
+
+
+
+	vec3 realColor = intermColor + vec3(m, m, m);
+	color = realColor;
+
 
 }

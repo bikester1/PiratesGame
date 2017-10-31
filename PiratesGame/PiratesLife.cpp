@@ -23,6 +23,7 @@ int main(void)
 	PiratesLife::Camera cam(70.0f, (float)width / (float)height, 0.1f, 1000.0f);
 	cam.setPos(glm::vec3(0.0f, 0.0f, 0.0f));
 	PiratesLife::RenderObj obj = PiratesLife::RenderObj(&cam);
+	PiratesLife::RenderObj obj2 = PiratesLife::RenderObj(&cam);
 	PiratesLife::InputHandler::setCam(&cam);
 	cam.setSpeed(0.1f);
 	unsigned int program;
@@ -64,10 +65,17 @@ int main(void)
 	//obj.setVertArray(importer.ImportVerticesFromOBJ("Models\\untitled.obj"));
 
 	// init and update buffers
-	obj.importOBJ("Models\\test3.obj");
+	obj.importOBJ("Models\\plane.obj");
+	obj2.importOBJ("Models\\test3.obj");
 	obj.setProgram(program);
 	obj.initBuffers();
 	obj.updateVertBuffer();
+
+	obj2.setProgram(program);
+	obj2.initBuffers();
+	obj2.updateVertBuffer();
+
+	obj2.setPos(3.0f, 1.0f, 5.0f);
 
 	int j;
 
@@ -88,6 +96,7 @@ int main(void)
 		glUseProgram(program);
 
 		//obj.render();
+		obj2.render();
 
 		for (i = 0; i < 20; i++) {
 			for (j = 0; j < 20; j++) {
