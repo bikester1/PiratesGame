@@ -36,6 +36,7 @@
     <Text Include="Dependencies\GLFW\COPYING.txt" />
     <Text Include="Shaders\FragmentShader.txt" />
     <Text Include="Shaders\VertexShader.txt" />
+    <Text Include="Shaders\FragmentShader - Copy.txt" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="RenderObj.h">

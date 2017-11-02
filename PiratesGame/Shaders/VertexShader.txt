@@ -3,10 +3,10 @@
 layout(location = 0) in vec3 vertexPositionModelSpace;
 layout(location = 1) in vec3 vertexNormalModelSpace;
 layout(location = 2) in vec3 vertexTextureModelSpace;
-out vec3 passed;
 out vec3 n;
 out vec3 l;
-out float distanceSquare;
+out vec3 e;
+out float distance;
 
 uniform mat4 MVP;
 uniform mat4 V;
@@ -18,25 +18,19 @@ void main() {
 
 	gl_Position = MVP * vec4(vertexPositionModelSpace, 1);
 
-	vec3 vertexWorldSpace = (M * vec4(vertexPositionModelSpace, 1)).xyz;
-	vec3 lightWorldSpace = vec3(0, 1, 0);
-	vec3 normalWorldSpace = (M * vec4(vertexNormalModelSpace, 0)).xyz;
 
-	vec3 lightDirectionWorldSpace = lightWorldSpace - vertexWorldSpace;
+	vec3 vertexCameraSpace = (V * M * vec4(vertexPositionModelSpace, 1)).xyz;
+	vec3 lightWorldSpace = vec3(1, 1, 1);
+	vec3 lightCameraSpace = (V * vec4(lightWorldSpace, 1)).xyz;
+	vec3 normalCameraSpace = (V * M * vec4(vertexNormalModelSpace, 0)).xyz;
 
-	//vec3 vertezCameraSpace = (V * M * vec4(vertexPositionModelSpace, 1)).xyz;
-	//vec3 eyeDirectionCameraSpace = vec3(0, 0, 0) - vertezCameraSpace;
+	vec3 lightDirectionCameraSpace = lightCameraSpace - vertexCameraSpace;
 
-	//vec3 lightCameraSpace = (V * vec4(1, 1, -1, 1)).xyz;
-	//vec3 lightDirectionCameraSpace = (V * vec4(1, 1,-1,0)).xyz;
+	vec3 eyeDirectionCameraSpace = vec3(0, 0, 0) - vertexCameraSpace;
 
-	//vec3 normalCameraSpace = (V * M * vec4(vertexNormalModelSpace, 0)).xyz;
-
-	n = normalize(normalWorldSpace);
-	l = normalize(lightDirectionWorldSpace);
-	distanceSquare = lightDirectionWorldSpace.x * lightDirectionWorldSpace.x + lightDirectionWorldSpace.y * lightDirectionWorldSpace.y + lightDirectionWorldSpace.z * lightDirectionWorldSpace.z;
-
-	vec4 pos = vec4(vertexPositionModelSpace, 1);
-	passed = vec3(pos.x, pos.y, pos.z);
+	n = normalize(normalCameraSpace);
+	l = lightDirectionCameraSpace;
+	e = eyeDirectionCameraSpace;
+	float distance = length(lightDirectionCameraSpace);
 
 }

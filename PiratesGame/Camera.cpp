@@ -159,7 +159,6 @@ namespace PiratesLife {
 		viewMat = glm::rotate(viewMat, glm::radians(rot.z), glm::vec3(0.0f, 0.0f, 1.0f));
 		viewMat = glm::translate(viewMat, glm::vec3(-pos.x, -pos.y, -pos.z));
 
-
 		cameraUpdated = false;
 	}
 
@@ -194,7 +193,7 @@ namespace PiratesLife {
 		vec = glm::rotate(vec, glm::radians(-rot.z), glm::vec3(0.0f, 0.0f, 1.0f));
 
 		vec = vec * speed;
-		std::cout << vec.x << " " << vec.y << " " << vec.z << " " << std::endl;
+		std::cout << pos.x << " " << pos.y << " " << pos.z << " " << std::endl;
 		pos += vec;
 	}
 

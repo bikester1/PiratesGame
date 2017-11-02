@@ -147,6 +147,7 @@
     <Text Include="Dependencies\GLFW\COPYING.txt" />
   </ItemGroup>
   <ItemGroup>
+    <Text Include="Shaders\FragmentShader - Copy.txt" />
     <Text Include="Shaders\FragmentShader.txt">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>

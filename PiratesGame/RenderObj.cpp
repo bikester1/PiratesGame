@@ -213,13 +213,19 @@ namespace PiratesLife {
 		return pos;
 	}
 
+	void RenderObj::loadTexture(std::string str) {
+
+		
+
+	}
+
 	glm::mat4x4 RenderObj::getMVP() {
 		glm::mat4x4 perspectiveMat = cam->getPerspectiveMat();
 		glm::mat4x4 viewMat = cam->getViewMat();
 		glm::mat4x4 rotateMat = glm::rotate(glm::mat4x4(1.0f), rot.x, glm::vec3(1.0f, 0.0f, 0.0f));
 		rotateMat = glm::rotate(rotateMat, rot.y, glm::vec3(0.0f, 1.0f, 0.0f));
 		rotateMat = glm::rotate(rotateMat, rot.z, glm::vec3(0.0f, 0.0f, 1.0f));
-		glm::mat4x4 modelMat = glm::translate(glm::mat4x4(1.0f), pos) * rotateMat * glm::scale(glm::mat4x4(0.1f),scale);
+		glm::mat4x4 modelMat = glm::translate(glm::mat4x4(1.0f), pos) * rotateMat * glm::scale(glm::mat4x4(1.0f),scale);
 		glm::mat4x4 MVPMat = (perspectiveMat * viewMat * modelMat);
 
 
@@ -247,6 +253,10 @@ namespace PiratesLife {
 
 	void RenderObj::setPosZ(float z) {
 		pos.z = z;
+	}
+
+	void RenderObj::setScale(glm::vec3 scale) {
+		RenderObj::scale = scale;
 	}
 
 	void RenderObj::setPos(float x, float y, float z) {

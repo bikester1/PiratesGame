@@ -65,8 +65,9 @@ int main(void)
 	//obj.setVertArray(importer.ImportVerticesFromOBJ("Models\\untitled.obj"));
 
 	// init and update buffers
-	obj.importOBJ("Models\\plane.obj");
+	obj.importOBJ("Models\\SubPlane.obj");
 	obj2.importOBJ("Models\\test3.obj");
+	obj.setScale(glm::vec3(5.0f, 5.0f, 5.0f));
 	obj.setProgram(program);
 	obj.initBuffers();
 	obj.updateVertBuffer();
@@ -75,7 +76,7 @@ int main(void)
 	obj2.initBuffers();
 	obj2.updateVertBuffer();
 
-	obj2.setPos(3.0f, 1.0f, 5.0f);
+	obj2.setPos(1.0f, 1.0f, 1.0f);
 
 	int j;
 
@@ -97,14 +98,15 @@ int main(void)
 
 		//obj.render();
 		obj2.render();
+		obj.render();
 
-		for (i = 0; i < 20; i++) {
-			for (j = 0; j < 20; j++) {
-				obj.setPosX(3.0f * j);
-				obj.setPosZ(5.0f * i);
-				obj.render();
-			}
-		}
+		//for (i = 0; i < 20; i++) {
+		//	for (j = 0; j < 20; j++) {
+		//		obj.setPosX(3.0f * j);
+		//		obj.setPosZ(5.0f * i);
+		//		obj.render();
+		//	}
+		//}
 		obj.setPosX(0.0f);
 
 		// Swap front and back buffers

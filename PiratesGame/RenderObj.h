@@ -9,6 +9,7 @@
 #include <Vector>
 #include <fstream>
 #include <iostream>
+#include <string>
 
 #include <glm/vec3.hpp>
 
@@ -50,7 +51,11 @@ namespace PiratesLife {
 
 			void setPosZ(float z);
 
+			void setScale(glm::vec3 scale);
+
 			void setPos(float x, float y, float z);
+
+			void loadTexture(std::string str);
 
 			void setProgram(unsigned int program);
 
@@ -69,6 +74,7 @@ namespace PiratesLife {
 			unsigned int modelMatrix;
 			unsigned int viewMatrix;
 			unsigned int program;
+			unsigned int texture;
 			glm::vec3 pos;
 			glm::vec3 rot;
 			glm::vec3 scale;
