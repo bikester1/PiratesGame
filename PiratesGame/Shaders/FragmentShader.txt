@@ -8,8 +8,14 @@ out vec3 color;
 
 float cosTheta = clamp(dot(n, normalize(l)), 0, 1);
 float distanceMult2 = 1/((distance + 1) * (distance + 1));
-float LI = cosTheta * 5 * distanceMult2;
+float LI = (cosTheta * 2 * distanceMult2) + 0.1;
 
+
+//vec3 specular(vec3 color, vec3 eyeDir, vec3 lightDir, float lightIntensity) {
+//	
+//
+//
+//}
 
 vec3 diffuse(vec3 color, float lightIntensity) {
 	vec3 diffuse;

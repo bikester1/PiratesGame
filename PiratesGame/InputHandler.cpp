@@ -25,6 +25,7 @@ namespace PiratesLife{
 			activeCam->setRight(true);
 
 
+
 		// key releases
 		if (key == GLFW_KEY_W && action == GLFW_RELEASE)
 			activeCam->setForward(false);

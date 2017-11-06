@@ -213,8 +213,10 @@ namespace PiratesLife {
 		return pos;
 	}
 
-	void RenderObj::loadTexture(std::string str) {
+	void RenderObj::loadTexture(std::string filePath, std::vector<float> *textureArray) {
 
+		std::ifstream fileStream = std::ifstream(filePath.c_str, std::ios::in);
+		std::string buffer;
 		
 
 	}

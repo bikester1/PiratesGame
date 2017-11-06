@@ -55,7 +55,7 @@ namespace PiratesLife {
 
 			void setPos(float x, float y, float z);
 
-			void loadTexture(std::string str);
+			void loadTexture(std::string filePath, std::vector<float> *textureArray);
 
 			void setProgram(unsigned int program);
 
@@ -74,11 +74,12 @@ namespace PiratesLife {
 			unsigned int modelMatrix;
 			unsigned int viewMatrix;
 			unsigned int program;
-			unsigned int texture;
+			unsigned int textureBuffer;
 			glm::vec3 pos;
 			glm::vec3 rot;
 			glm::vec3 scale;
 			std::vector<glm::vec3> myVertices;
+			std::vector<float> myTexture;
 			PiratesLife::Camera *cam;
 			bool hasNormals;
 			bool hasTexture;
